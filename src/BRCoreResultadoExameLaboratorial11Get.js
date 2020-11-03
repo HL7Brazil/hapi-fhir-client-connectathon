@@ -458,6 +458,16 @@ function BRCoreResultadoExameLaboratorial11(props) {
                         ? <p>{brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].code}</p>
                         : <p>O código da Amostra não foi informado.</p>
                       }
+                      <h6>Display</h6>
+                      {brCoreResultadoExameLaboratorial11.entry[2].resource
+                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type
+                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding
+                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding.length
+                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0]
+                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].code
+                        ? <p>{BRTipoAmostraGAL.get(brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].code).display}</p>
+                        : <p>O código da Amostra não foi informado.</p>
+                      }
                       <br />
                     </div>
                     : <div></div>
