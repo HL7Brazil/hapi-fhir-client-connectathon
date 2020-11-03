@@ -19,6 +19,9 @@ function BRCoreLandingPage() {
               <a href="#estrategias">Estratégias para o enfrentamento da COVID-19</a>
             </li>
             <li>
+              <a href="#linksimportantes">Links importantes</a>
+            </li>
+            <li>
               <a href="#listaperfis">Lista de perfis do BR-Core</a>
             </li>
           </ul>
@@ -45,6 +48,11 @@ function BRCoreLandingPage() {
           <li>Disponibilização de informações estratégicas</li>
         </ul>
         <p>O enfrentamento da pandemia requer informação em diversos níveis, desde o registro das notificações, óbitos, resultados de exames realizados até o provimento de serviços que visam prevenção e cuidado. Entre esses serviços, estão aqueles de autoavaliação, teleconsulta, busca ativa de pacientes e aplicações avançadas para a identificação de tendências e de populações vulneráveis. Para atender às necessidades de enfrentamento ao novo Coronavírus, o Conecte SUS sistematiza um ecossistema de atendimento e de dados em saúde para a COVID-19.</p>
+        <a id="linksimportantes"/>
+        <h5>Links importantes</h5>
+        <ul>
+          <li><a href="https://br-core.gointerop.com">Guia de Implementação do BR-Core v0.0.1</a></li>
+        </ul>
         <a id="listaperfis"/>
         <h5>Lista de perfis do BR-Core</h5>
         <ul>
