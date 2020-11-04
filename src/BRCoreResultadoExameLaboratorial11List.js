@@ -8,29 +8,23 @@ const client = FHIR.client({
   serverUrl: DotEnv.FHIR_BASE_URL
 });
 
-async function getBRCoreResultadoExameLaboratorial11() {
-  let response = await client.request("Bundle?identifier=http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-1|");
-  return response;
-}
-
 function BRCoreResultadoExameLaboratorial11(props) {
   const { IdPath } = useParams();
   const [brCoreResultadoExameLaboratorial11, setBrCoreResultadoExameLaboratorial11] = useState();
 
-  const onLoad = async () => {
-    var newResultadoExameLaboratorial11;
-
-    if (client) {
-      newResultadoExameLaboratorial11 = await getBRCoreResultadoExameLaboratorial11();
-    }  
-
-    if (newResultadoExameLaboratorial11) {
-        console.log(newResultadoExameLaboratorial11);
-        setBrCoreResultadoExameLaboratorial11(newResultadoExameLaboratorial11);
-    }
-  }
-
   useEffect(async () => {
+    async function onLoad() {
+      var newResultadoExameLaboratorial11;
+  
+      if (client) {
+        newResultadoExameLaboratorial11 = await client.request("Bundle?identifier=http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-1|");
+      }  
+  
+      if (newResultadoExameLaboratorial11) {
+          console.log(newResultadoExameLaboratorial11);
+          setBrCoreResultadoExameLaboratorial11(newResultadoExameLaboratorial11);
+      }
+    }
     onLoad();
   }, []);
 
@@ -48,17 +42,20 @@ function BRCoreResultadoExameLaboratorial11(props) {
                         <th>Opções</th>
                     </tr>
                 </thead>
-                {brCoreResultadoExameLaboratorial11.entry.map(entry => {
-                    const entries = [];
+                {brCoreResultadoExameLaboratorial11.entry && brCoreResultadoExameLaboratorial11.entry.length > 0 
+                  ? brCoreResultadoExameLaboratorial11.entry.map(entry => {
+                      const entries = [];
 
-                    entries.push(<td align="center">{entry.resource.id}</td>)
+                      entries.push(<td align="center">{entry.resource.id}</td>)
 
-                    entries.push(<td align="center"><a href={"../brresultadoexamelaboratorial11/" + entry.resource.id}>Visualizar</a></td>);
+                      entries.push(<td align="center"><a href={"../brresultadoexamelaboratorial11/" + entry.resource.id}>Visualizar</a></td>);
 
-                    return (
-                        <tbody>{entries}</tbody>
-                    )
-                })}
+                      return (
+                          <tbody>{entries}</tbody>
+                      )
+                    })
+                  : <tbody><td align="center">Nenhum registro encontrado</td><td align="center">-</td></tbody>
+                }                
             </Table>
             :
             <div>

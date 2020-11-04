@@ -19,33 +19,31 @@ const client = FHIR.client({
   serverUrl: DotEnv.FHIR_BASE_URL
 });
 
-async function getBRCoreResultadoExameLaboratorial11() {
-  let response = await client.request("Bundle/" + 1552);
-  return response;
-}
-
 function BRCoreResultadoExameLaboratorial11(props) {
   const { IdPath } = useParams();
   const [brCoreResultadoExameLaboratorial11, setBrCoreResultadoExameLaboratorial11] = useState();
-
-  const onLoad = async () => {
-    var newResultadoExameLaboratorial11;
-
-    if (client) {
-      newResultadoExameLaboratorial11 = await getBRCoreResultadoExameLaboratorial11();
-    }
-
-    if (newResultadoExameLaboratorial11) {
-      console.log(newResultadoExameLaboratorial11);
-      setBrCoreResultadoExameLaboratorial11(newResultadoExameLaboratorial11);
-    }
-  }
 
   const onClickCancel = (event) => {
     window.location = "./";
   }
 
   useEffect(async () => {
+    async function onLoad() {
+      var newResultadoExameLaboratorial11;
+  
+      if (client) {
+        try {
+          newResultadoExameLaboratorial11 = await client.request("Bundle/" + IdPath);
+        } catch (error) {
+          newResultadoExameLaboratorial11 = {entry: []};
+        }
+      }
+  
+      if (newResultadoExameLaboratorial11) {
+        console.log(newResultadoExameLaboratorial11);
+        setBrCoreResultadoExameLaboratorial11(newResultadoExameLaboratorial11);
+      }
+    }
     onLoad();
   }, []);
 
@@ -130,7 +128,7 @@ function BRCoreResultadoExameLaboratorial11(props) {
                           }
                           <br />
                         </div>
-                        : <div>O Bundle não contém todos os recursos esperados.</div>
+                        : <div style={{ color: "red" }}>O Bundle não contém todos os recursos esperados.</div>
                       }
                     </Card.Text>
                   </Card.Body>
@@ -140,6 +138,8 @@ function BRCoreResultadoExameLaboratorial11(props) {
             <tr>
               <td>
                 <div class="container">
+                  <h5>Autor</h5>
+                  <br />
                   {brCoreResultadoExameLaboratorial11
                     && brCoreResultadoExameLaboratorial11.entry
                     && brCoreResultadoExameLaboratorial11.entry.length > 0
@@ -147,22 +147,20 @@ function BRCoreResultadoExameLaboratorial11(props) {
                     && brCoreResultadoExameLaboratorial11.entry[0].resource.author
                     && brCoreResultadoExameLaboratorial11.entry[0].resource.author.length > 0
                     && brCoreResultadoExameLaboratorial11.entry[0].resource.author[0].identifier
-                    ? <div>
-                      <h5>Autor</h5>
-                      <br />
-                      <h6>Sistema</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[0].resource.author[0].identifier.system
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[0].resource.author[0].identifier.system} (CNPJ)</p>
-                        : <p>Não informado.</p>
-                      }
-                      <h6>Valor</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[0].resource.author[0].identifier.value
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[0].resource.author[0].identifier.value}</p>
-                        : <p>Não informado.</p>
-                      }
-                      <br />
-                    </div>
-                    : <div>O Bundle não contém todos os recursos esperados.</div>
+                    ? <div>                      
+                        <h6>Sistema</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[0].resource.author[0].identifier.system
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[0].resource.author[0].identifier.system} (CNPJ)</p>
+                          : <p>Não informado.</p>
+                        }
+                        <h6>Valor</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[0].resource.author[0].identifier.value
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[0].resource.author[0].identifier.value}</p>
+                          : <p>Não informado.</p>
+                        }
+                        <br />
+                      </div>
+                      : <div>O Bundle não contém todos os recursos esperados.</div>
                   }
                 </div>
               </td>
@@ -199,7 +197,7 @@ function BRCoreResultadoExameLaboratorial11(props) {
                           }
                           <br />
                         </div>
-                        : <div>O Bundle não contém todos os recursos esperados.</div>
+                        : <div style={{ color: "red" }}>O Bundle não contém todos os recursos esperados.</div>
                       }
                     </Card.Text>
                   </Card.Body>
@@ -209,28 +207,28 @@ function BRCoreResultadoExameLaboratorial11(props) {
             <tr>
               <td>
                 <div class="container">
+                  <h5>Paciente</h5>
+                  <br />
                   {brCoreResultadoExameLaboratorial11
                     && brCoreResultadoExameLaboratorial11.entry
                     && brCoreResultadoExameLaboratorial11.entry.length > 0
                     && brCoreResultadoExameLaboratorial11.entry[0].resource
                     && brCoreResultadoExameLaboratorial11.entry[0].resource.subject
                     && brCoreResultadoExameLaboratorial11.entry[0].resource.subject.identifier
-                    ? <div>
-                      <h5>Paciente</h5>
-                      <br />
-                      <h6>Sistema</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[0].resource.subject.identifier.system
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[0].resource.subject.identifier.system} (CNS)</p>
-                        : <p>Não informado.</p>
-                      }
-                      <h6>Valor</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[0].resource.subject.identifier.value
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[0].resource.subject.identifier.value}</p>
-                        : <p>Não informado.</p>
-                      }
-                      <br />
-                    </div>
-                    : <div></div>
+                    ? <div>                      
+                        <h6>Sistema</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[0].resource.subject.identifier.system
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[0].resource.subject.identifier.system} (CNS)</p>
+                          : <p>Não informado.</p>
+                        }
+                        <h6>Valor</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[0].resource.subject.identifier.value
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[0].resource.subject.identifier.value}</p>
+                          : <p>Não informado.</p>
+                        }
+                        <br />
+                      </div>
+                      : <div>O Bundle não contém todos os recursos esperados.</div>
                   }
                 </div>
               </td>
@@ -266,7 +264,7 @@ function BRCoreResultadoExameLaboratorial11(props) {
                           }
                           <br />
                         </div>
-                        : <div></div>
+                        : <div style={{ color: "red" }}>O Bundle não contém todos os recursos esperados.</div>
                       }
                     </Card.Text>
                   </Card.Body>
@@ -276,201 +274,201 @@ function BRCoreResultadoExameLaboratorial11(props) {
             <tr>
               <td>
                 <div class="container">
+                <h4>Observação</h4>
                   {brCoreResultadoExameLaboratorial11
                     && brCoreResultadoExameLaboratorial11.entry
                     && brCoreResultadoExameLaboratorial11.entry.length > 2
                     && brCoreResultadoExameLaboratorial11.entry[1].resource
-                    ? <div>
-                      <h4>Observação</h4>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.issued
-                        ? <p>Emitida em {DateUtils.toBrazilianFormat(brCoreResultadoExameLaboratorial11.entry[1].resource.issued)}</p>
-                        : <p>Data de emissão não informada</p>
-                      }
-                      <h5>Status</h5>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.status
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.status}</p>
-                        : <p>Status da emissão não informado.</p>
-                      }
-                      <h5>Realizada por</h5>
-                      <h6>Sistema</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.performer
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.performer.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.performer[0].identifier
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.performer[0].identifier.system
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.performer[0].identifier.system} (CNPJ)</p>
-                        : <p>CodeSystem de identificação do realizador não foi informado.</p>
-                      }
-                      <h6>Valor</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.performer
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.performer.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.performer[0].identifier
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.performer[0].identifier.value
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.performer[0].identifier.value}</p>
-                        : <p>O CNPJ do realizador não foi informado.</p>
-                      }
-                      <br />
-                      <h5>Exame</h5>
-                      <h6>Sistema</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.code
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding[0].system
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding[0].system}</p>
-                        : <p>O CodeSystem para identificação do exame não foi informado.</p>
-                      }
-                      <h6>Valor</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.code
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding[0].code
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding[0].code}</p>
-                        : <p>O código de identificação do exame não foi informado.</p>
-                      }
-                      <h6>Display</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.code
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding[0].code
-                        ? <p>{BRNomeExameGAL.get(brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding[0].code).display}</p>
-                        : <p>{BRNomeExameGAL.get(brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding[0].code).display}</p>
-                      }
-                      <br />
-                      <h5>Categoria</h5>
-                      <h6>Sistema</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.category
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0]
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0]
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0].system
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0].system}</p>
-                        : <p>O CodeSystem para identificação da categoria do exame não foi encontrado.</p>
-                      }
-                      <h6>Valor</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.category
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0]
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0]
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0].code
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0].code}</p>
-                        : <p>O código para identificação da categoria do exame não foi encontrado.</p>
-                      }
-                      <h6>Display</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.category
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0]
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0]
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0].code
-                        ? <p>{BRSubgrupoTabelaSUS.get(brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0].code).display}</p>
-                        : <p>{BRSubgrupoTabelaSUS.get(brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0].code).display}</p>
-                      }
-                      <br />
-                      <h5>Valor</h5>
-                      <h6>Sistema</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.category
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0]
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].system
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].system}</p>
-                        : <p>O CodeSystem para valores da Observação não foi informado.</p>
-                      }
-                      <h6>Valor</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.category
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0]
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].code
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].code}</p>
-                        : <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].code}</p>
-                      }
-                      <h6>Display</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.category
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0]
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].code
-                        ? <p>{BRResultadoQualitativoExame.get(brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].code).display}</p>
-                        : <p>{BRResultadoQualitativoExame.get(brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].code).display}</p>
-                      }
-                      <br />
-                      <h5>Interpretação</h5>
-                      <h6>Sistema</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.category
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0]
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding[0].system
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding[0].system}</p>
-                        : <p>O CodeSystem para interpretação da observação não foi informado.</p>
-                      }
-                      <h6>Valor</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.category
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0]
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding[0].code
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding[0].code}</p>
-                        : <p>O código para interpretação do valor não foi informado.</p>
-                      }
-                      <h6>Display</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[1].resource.category
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0]
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding.length > 0
-                        && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding[0].system
-                        ? <p>{BRResultadoQualitativoExame.get(brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding[0].code).display}</p>
-                        : <p>{BRResultadoQualitativoExame.get(brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding[0].code).display}</p>
-                      }
-                      <br />
-                      <h5>Amostra</h5>
-                      <h6>Sistema</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[2].resource
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding.length
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0]
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].system
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].system}</p>
-                        : <p>O CodeSystem da Amostra não foi informado.</p>
-                      }
-                      <h6>Valor</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[2].resource
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding.length
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0]
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].code
-                        ? <p>{brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].code}</p>
-                        : <p>O código da Amostra não foi informado.</p>
-                      }
-                      <h6>Display</h6>
-                      {brCoreResultadoExameLaboratorial11.entry[2].resource
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding.length
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0]
-                        && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].code
-                        ? <p>{BRTipoAmostraGAL.get(brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].code).display}</p>
-                        : <p>O código da Amostra não foi informado.</p>
-                      }
-                      <br />
-                    </div>
-                    : <div></div>
+                    ? <div>                      
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.issued
+                          ? <p>Emitida em {DateUtils.toBrazilianFormat(brCoreResultadoExameLaboratorial11.entry[1].resource.issued)}</p>
+                          : <p>Data de emissão não informada</p>
+                        }
+                        <h5>Status</h5>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.status
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.status}</p>
+                          : <p>Status da emissão não informado.</p>
+                        }
+                        <h5>Realizada por</h5>
+                        <h6>Sistema</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.performer
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.performer.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.performer[0].identifier
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.performer[0].identifier.system
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.performer[0].identifier.system} (CNPJ)</p>
+                          : <p>CodeSystem de identificação do realizador não foi informado.</p>
+                        }
+                        <h6>Valor</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.performer
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.performer.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.performer[0].identifier
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.performer[0].identifier.value
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.performer[0].identifier.value}</p>
+                          : <p>O CNPJ do realizador não foi informado.</p>
+                        }
+                        <br />
+                        <h5>Exame</h5>
+                        <h6>Sistema</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.code
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding[0].system
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding[0].system}</p>
+                          : <p>O CodeSystem para identificação do exame não foi informado.</p>
+                        }
+                        <h6>Valor</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.code
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding[0].code
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding[0].code}</p>
+                          : <p>O código de identificação do exame não foi informado.</p>
+                        }
+                        <h6>Display</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.code
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding[0].code
+                          ? <p>{BRNomeExameGAL.get(brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding[0].code).display}</p>
+                          : <p>{BRNomeExameGAL.get(brCoreResultadoExameLaboratorial11.entry[1].resource.code.coding[0].code).display}</p>
+                        }
+                        <br />
+                        <h5>Categoria</h5>
+                        <h6>Sistema</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.category
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0]
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0]
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0].system
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0].system}</p>
+                          : <p>O CodeSystem para identificação da categoria do exame não foi encontrado.</p>
+                        }
+                        <h6>Valor</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.category
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0]
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0]
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0].code
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0].code}</p>
+                          : <p>O código para identificação da categoria do exame não foi encontrado.</p>
+                        }
+                        <h6>Display</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.category
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0]
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0]
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0].code
+                          ? <p>{BRSubgrupoTabelaSUS.get(brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0].code).display}</p>
+                          : <p>{BRSubgrupoTabelaSUS.get(brCoreResultadoExameLaboratorial11.entry[1].resource.category[0].coding[0].code).display}</p>
+                        }
+                        <br />
+                        <h5>Valor</h5>
+                        <h6>Sistema</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.category
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0]
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].system
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].system}</p>
+                          : <p>O CodeSystem para valores da Observação não foi informado.</p>
+                        }
+                        <h6>Valor</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.category
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0]
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].code
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].code}</p>
+                          : <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].code}</p>
+                        }
+                        <h6>Display</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.category
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0]
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].code
+                          ? <p>{BRResultadoQualitativoExame.get(brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].code).display}</p>
+                          : <p>{BRResultadoQualitativoExame.get(brCoreResultadoExameLaboratorial11.entry[1].resource.valueCodeableConcept.coding[0].code).display}</p>
+                        }
+                        <br />
+                        <h5>Interpretação</h5>
+                        <h6>Sistema</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.category
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0]
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding[0].system
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding[0].system}</p>
+                          : <p>O CodeSystem para interpretação da observação não foi informado.</p>
+                        }
+                        <h6>Valor</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.category
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0]
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding[0].code
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding[0].code}</p>
+                          : <p>O código para interpretação do valor não foi informado.</p>
+                        }
+                        <h6>Display</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[1].resource.category
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0]
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding.length > 0
+                          && brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding[0].system
+                          ? <p>{BRResultadoQualitativoExame.get(brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding[0].code).display}</p>
+                          : <p>{BRResultadoQualitativoExame.get(brCoreResultadoExameLaboratorial11.entry[1].resource.interpretation[0].coding[0].code).display}</p>
+                        }
+                        <br />
+                        <h5>Amostra</h5>
+                        <h6>Sistema</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[2].resource
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding.length
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0]
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].system
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].system}</p>
+                          : <p>O CodeSystem da Amostra não foi informado.</p>
+                        }
+                        <h6>Valor</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[2].resource
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding.length
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0]
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].code
+                          ? <p>{brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].code}</p>
+                          : <p>O código da Amostra não foi informado.</p>
+                        }
+                        <h6>Display</h6>
+                        {brCoreResultadoExameLaboratorial11.entry[2].resource
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding.length
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0]
+                          && brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].code
+                          ? <p>{BRTipoAmostraGAL.get(brCoreResultadoExameLaboratorial11.entry[2].resource.type.coding[0].code).display}</p>
+                          : <p>O código da Amostra não foi informado.</p>
+                        }
+                        <br />
+                      </div>
+                    : <div>O Bundle não contém todos os recursos esperados.</div>
                   }
                 </div>
               </td>
@@ -629,7 +627,7 @@ function BRCoreResultadoExameLaboratorial11(props) {
                           }
                           <br />
                         </div>
-                        : <div></div>
+                        : <div style={{ color: "red" }}>O Bundle não contém todos os recursos esperados.</div>
                       }
                     </Card.Text>
                   </Card.Body>
